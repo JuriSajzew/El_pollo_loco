@@ -8,9 +8,11 @@ function init() {
 
 
     console.log('My Character is', world.character);
-    console.log('My Chicken is', world.enemies);
-    console.log('My Cloud is', world.clouds);
-    console.log('My Cloud is', world.backgroundObjects);
+    console.log('My Chicken is', world.level.enemies);
+    console.log('My ChickenSmall is', world.level.chicken_small);
+    console.log('My Cloud is', world.level.clouds);
+    console.log('My Endboss is', Endboss);
+
 
 }
 
