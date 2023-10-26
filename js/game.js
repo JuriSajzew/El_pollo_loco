@@ -5,15 +5,6 @@ let keyboard = new Keyboard();
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
-
-
-    console.log('My Character is', world.character);
-    console.log('My Chicken is', world.level.enemies);
-    console.log('My ChickenSmall is', world.level.chicken_small);
-    console.log('My Cloud is', world.level.clouds);
-    console.log('My Endboss is', Endboss);
-
-
 }
 
 window.addEventListener("keydown", (e) => {
