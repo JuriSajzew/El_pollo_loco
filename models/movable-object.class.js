@@ -6,7 +6,7 @@ class MovableObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
     coin = 0;
-    bottle = 100;
+    bottle = 0;
 
     applyGravity() {
         setInterval(() => {
@@ -57,10 +57,28 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    collectBottle() {
+        this.bottle += 20;
+    }
+
+    throwBottle() {
+        this.bottle -= 20;
+        if (this.bottle < 0) {
+            this.bottle = 0;
+        }
+        console.log(this.bottle);
+    }
+
+
+
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
         return timepassed < 1;
+    }
+
+    collectCoin() {
+        this.coin += 20;
     }
 
     isDead() {

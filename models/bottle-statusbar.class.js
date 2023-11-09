@@ -8,8 +8,6 @@ class BottleStatusBar extends DrawableObject {
         'img/7_statusbars/1_statusbar/3_statusbar_bottle/green/100.png'
     ];
 
-    percentage = 100;
-
     constructor() {
         super();
         this.loadImages(this.IMAGES_BOTTLESTATUSBAR);
@@ -21,7 +19,7 @@ class BottleStatusBar extends DrawableObject {
     }
 
     percent() {
-        let percent = this.character.energy / this.percentage;
+        let percent = this.character.bottle / this.percentage;
         this.setpercentTage(percent);
     }
 
@@ -33,17 +31,17 @@ class BottleStatusBar extends DrawableObject {
 
     resolveImageIndex() {
         if (this.percentage == 100) {
-            return 0;
-        } else if (this.percentage > 80) {
+            return 5;
+        } else if (this.percentage >= 80) {
             return 4;
-        } else if (this.percentage > 60) {
+        } else if (this.percentage >= 60) {
             return 3;
-        } else if (this.percentage > 40) {
+        } else if (this.percentage >= 40) {
             return 2;
-        } else if (this.percentage > 20) {
+        } else if (this.percentage >= 20) {
             return 1;
         } else {
-            return 5;
+            return 0;
         }
     }
 }

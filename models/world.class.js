@@ -9,6 +9,8 @@ class World {
     StatusBarBottle = new BottleStatusBar();
     StatusBarCoin = new CoinStatusBar();
     throwableobjects = [];
+    canThrowBottle = true;
+    coinObject = [];
 
 
     constructor(canvas, keyboard) {
@@ -27,17 +29,26 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
-            this.checkThrowObject();
             this.checkCollisionsCharacterBottle();
+            this.checkCollisionsCharacterCoin();
+            this.checkThrowObject();
         }, 200);
     }
 
     checkThrowObject() {
-        if (this.keyboard.D) {
+        if (this.keyboard.D && this.character.bottle > 0) {
             let bottle = new ThrowableObject(this.character.x, this.character.y);
             this.throwableobjects.push(bottle);
+            this.character.throwBottle();
+            this.StatusBarBottle.setpercentTage(this.character.bottle);
+            console.log(this.throwableobjects);
+
+            if (this.character.bottle === 0) {
+                this.canThrowBottle = false;
+            }
         }
     }
+
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
@@ -49,14 +60,26 @@ class World {
     }
 
     checkCollisionsCharacterBottle() {
-        this.level.bottles.forEach((BottleObject, indexOfbottles) => {
+        this.level.bottles.forEach((BottleObject, indexOfbottle) => {
             if (this.character.isColliding(BottleObject)) {
+                this.level.bottles.splice(indexOfbottle, 1);
                 this.throwableobjects.push(BottleObject);
-                this.level.bottles.splice(indexOfbottles, 1);
-                this.StatusBarBottle.hit();
-                console.log(this.throwableobjects);
+                this.character.collectBottle();
+                this.StatusBarBottle.setpercentTage(this.character.bottle);
             }
-        })
+
+        });
+    }
+
+    checkCollisionsCharacterCoin() {
+        this.level.coins.forEach((CoinObjekt, indexOfcoins) => {
+            if (this.character.isColliding(CoinObjekt)) {
+                this.coinObject.push(CoinObjekt);
+                this.level.coins.splice(indexOfcoins, 1);
+                this.character.collectCoin();
+                this.StatusBarCoin.setpercentTage(this.character.coin);
+            }
+        }, 20)
     }
 
     draw() {
