@@ -7,6 +7,13 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     coin = 0;
     bottle = 0;
+    chickenIsDead = false;
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+    }
 
     applyGravity() {
         setInterval(() => {
@@ -36,15 +43,13 @@ class MovableObject extends DrawableObject {
         this.otherDirection = true;
     }
 
-    jump() {
-        this.speedY = 30;
-    }
+
 
     isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height
+        return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
     }
 
     hit() {
@@ -57,19 +62,12 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    collectBottle() {
-        this.bottle += 20;
-    }
-
     throwBottle() {
         this.bottle -= 20;
         if (this.bottle < 0) {
             this.bottle = 0;
         }
-        console.log(this.bottle);
     }
-
-
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
@@ -81,7 +79,15 @@ class MovableObject extends DrawableObject {
         this.coin += 20;
     }
 
+    collectBottle() {
+        this.bottle += 20;
+    }
+
     isDead() {
         return this.energy == 0;
+    }
+
+    killChicken() {
+        console.log('Hünnchen ist Tod!');
     }
 }

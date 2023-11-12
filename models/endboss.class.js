@@ -2,7 +2,7 @@ class Endboss extends MovableObject {
     y = 50;
     height = 400;
     width = 300;
-
+    hadFirstContact = false;
     IMAGES_WALKING = [
         'img/4_enemie_boss_chicken/2_alert/G5.png',
         'img/4_enemie_boss_chicken/2_alert/G6.png',
@@ -23,6 +23,7 @@ class Endboss extends MovableObject {
     }
 
     animate() {
+        let i = 0;
         setInterval(() => {
             this.moveLeft();
             this.otherDirection = false;

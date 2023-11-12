@@ -8,6 +8,10 @@ class Chicken extends MovableObject {
         'img/3_enemies_chicken/chicken_normal/1_walk/3_w.png',
     ];
 
+    IMAGES_DEADCHICKEN = [
+        'img/3_enemies_chicken/chicken_normal/2_dead'
+    ];
+
 
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
@@ -30,4 +34,6 @@ class Chicken extends MovableObject {
         }, 200);
 
     }
+
+    
 }

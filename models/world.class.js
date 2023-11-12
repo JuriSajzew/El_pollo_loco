@@ -11,6 +11,7 @@ class World {
     throwableobjects = [];
     canThrowBottle = true;
     coinObject = [];
+    deadEnemy = [];
 
 
     constructor(canvas, keyboard) {
@@ -32,6 +33,7 @@ class World {
             this.checkCollisionsCharacterBottle();
             this.checkCollisionsCharacterCoin();
             this.checkThrowObject();
+            this.checkCollisionsChicken();
         }, 200);
     }
 
@@ -41,10 +43,32 @@ class World {
             this.throwableobjects.push(bottle);
             this.character.throwBottle();
             this.StatusBarBottle.setpercentTage(this.character.bottle);
-            console.log(this.throwableobjects);
 
             if (this.character.bottle === 0) {
                 this.canThrowBottle = false;
+            }
+        }
+    }
+
+    //checkCollisionsCharacterBottle() {
+    //    this.level.bottles.forEach((BottleObject, indexOfbottle) => {
+    //        if (this.character.isColliding(BottleObject)) {
+    //            this.level.bottles.splice(indexOfbottle, 1);
+    //            this.throwableobjects.push(BottleObject);
+    //            this.character.collectBottle();
+    //            this.StatusBarBottle.setpercentTage(this.character.bottle);
+    //        }
+    //    }, 10);
+    //}
+
+    checkCollisionsCharacterBottle() {
+        for (let indexOfbottle = this.level.bottles.length - 1; indexOfbottle >= 0; indexOfbottle--) {
+            const BottleObject = this.level.bottles[indexOfbottle];
+            if (this.character.isColliding(BottleObject)) {
+                this.level.bottles.splice(indexOfbottle, 1);
+                this.throwableobjects.push(BottleObject);
+                this.character.collectBottle();
+                this.StatusBarBottle.setpercentTage(this.character.bottle);
             }
         }
     }
@@ -59,17 +83,18 @@ class World {
         });
     }
 
-    checkCollisionsCharacterBottle() {
-        this.level.bottles.forEach((BottleObject, indexOfbottle) => {
-            if (this.character.isColliding(BottleObject)) {
-                this.level.bottles.splice(indexOfbottle, 1);
-                this.throwableobjects.push(BottleObject);
-                this.character.collectBottle();
-                this.StatusBarBottle.setpercentTage(this.character.bottle);
-            }
 
-        });
+
+    checkCollisionsChicken() {
+        this.level.enemies.forEach((enemy, indexOfEnemis) => {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround && enemy.y === 350) {
+                this.deadEnemy.push(enemy);
+                this.level.enemies.splice(indexOfEnemis, 1);
+            }
+        })
     }
+
+
 
     checkCollisionsCharacterCoin() {
         this.level.coins.forEach((CoinObjekt, indexOfcoins) => {
@@ -87,21 +112,16 @@ class World {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.clouds);
-
         this.ctx.translate(-this.camera_x, 0);
-
         this.addToMap(this.StatusBarHealth);
         this.addToMap(this.StatusBarBottle);
         this.addToMap(this.StatusBarCoin);
-
         this.ctx.translate(this.camera_x, 0);
-
         this.addToMap(this.character);
-        this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableobjects);
-
         this.ctx.translate(-this.camera_x, 0);
 
         let self = this;
@@ -141,6 +161,4 @@ class World {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
-
-
 }

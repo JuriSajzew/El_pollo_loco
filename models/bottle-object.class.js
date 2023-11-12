@@ -1,4 +1,11 @@
 class BottleObject extends DrawableObject {
+    offset = {
+        top: 20,
+        bottom: 20,
+        left: 20,
+        right: 20
+    }
+
     y = 360;
     height = 80;
     width = 80;
