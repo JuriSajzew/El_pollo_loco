@@ -18,7 +18,7 @@ class Cloud extends MovableObject {
         this.animate();
     }
     animate() {
-        setInterval(() => {
+        setStoppableInterval(() => {
             this.moveLeft();
             this.otherDirection = false;
         }, 1000 / 60);

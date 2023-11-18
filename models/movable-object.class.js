@@ -56,7 +56,15 @@ class MovableObject extends DrawableObject {
         this.energy -= 5;
         if (this.energy < 0) {
             this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
 
+    hitEndboss() {
+        this.energy -= 20;
+        if (this.energy < 0) {
+            this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
         }
@@ -84,10 +92,8 @@ class MovableObject extends DrawableObject {
     }
 
     isDead() {
-        return this.energy == 0;
+        return this.energy === 0;
     }
 
-    killChicken() {
-        console.log('Hünnchen ist Tod!');
-    }
+
 }

@@ -1,63 +1,69 @@
-const level1 = new Level(
-    [
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Endboss(),
-        new Chickensmall(),
-        new Chickensmall(),
-        new Chickensmall(),
-        new Chickensmall(),
-        new Chickensmall(),
-    ],
+let level1;
 
-    [
-        new Cloud(),
-        new Cloud(),
-        new Cloud(),
-        new Cloud(),
-    ],
+function initLevel() {
+    level1 = new Level(
+        [new Endboss()
+        ],
 
-    [
-        new BackgroundObject('img/5_background/layers/air.png', -719),
-        new BackgroundObject('img/5_background/layers/3_third_layer/2.png', -719),
-        new BackgroundObject('img/5_background/layers/2_second_layer/2.png', -719),
-        new BackgroundObject('img/5_background/layers/1_first_layer/2.png', -719),
+        [
+            new Chicken(),
+            new Chicken(),
+            new Chicken(),
+            new Chicken(),
+            new Chicken(),
+            new Chickensmall(),
+            new Chickensmall(),
+            new Chickensmall(),
+            new Chickensmall(),
+            new Chickensmall(),
+        ],
 
-        new BackgroundObject('img/5_background/layers/air.png', 0),
-        new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 0),
-        new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 0),
-        new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 0),
-        new BackgroundObject('img/5_background/layers/air.png', 719),
-        new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719),
-        new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719),
-        new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719),
+        [
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+            new Cloud(),
+        ],
 
-        new BackgroundObject('img/5_background/layers/air.png', 719 * 2),
-        new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 719 * 2),
-        new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 719 * 2),
-        new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719 * 2),
-        new BackgroundObject('img/5_background/layers/air.png', 719 * 3),
-        new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719 * 3),
-        new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719 * 3),
-        new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719 * 3),
-    ],
+        [
+            new BackgroundObject('img/5_background/layers/air.png', -719),
+            new BackgroundObject('img/5_background/layers/3_third_layer/2.png', -719),
+            new BackgroundObject('img/5_background/layers/2_second_layer/2.png', -719),
+            new BackgroundObject('img/5_background/layers/1_first_layer/2.png', -719),
 
-    [
-        new CoinObjekt(),
-        new CoinObjekt(),
-        new CoinObjekt(),
-        new CoinObjekt(),
-        new CoinObjekt()
-    ], 
+            new BackgroundObject('img/5_background/layers/air.png', 0),
+            new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 0),
+            new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 0),
+            new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 0),
+            new BackgroundObject('img/5_background/layers/air.png', 719),
+            new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719),
+            new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719),
+            new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719),
 
-    [
-        new BottleObject(),
-        new BottleObject(),
-        new BottleObject(),
-        new BottleObject(),
-        new BottleObject()
-    ]
-);
+            new BackgroundObject('img/5_background/layers/air.png', 719 * 2),
+            new BackgroundObject('img/5_background/layers/3_third_layer/1.png', 719 * 2),
+            new BackgroundObject('img/5_background/layers/2_second_layer/1.png', 719 * 2),
+            new BackgroundObject('img/5_background/layers/1_first_layer/1.png', 719 * 2),
+            new BackgroundObject('img/5_background/layers/air.png', 719 * 3),
+            new BackgroundObject('img/5_background/layers/3_third_layer/2.png', 719 * 3),
+            new BackgroundObject('img/5_background/layers/2_second_layer/2.png', 719 * 3),
+            new BackgroundObject('img/5_background/layers/1_first_layer/2.png', 719 * 3),
+        ],
+
+        [
+            new CoinObjekt(),
+            new CoinObjekt(),
+            new CoinObjekt(),
+            new CoinObjekt(),
+            new CoinObjekt()
+        ],
+
+        [
+            new BottleObject(),
+            new BottleObject(),
+            new BottleObject(),
+            new BottleObject(),
+            new BottleObject()
+        ]
+    );
+}

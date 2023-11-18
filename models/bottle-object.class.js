@@ -23,7 +23,7 @@ class BottleObject extends DrawableObject {
     }
 
     animate() {
-        setInterval(() => {
+        setStoppableInterval(() => {
             this.playAnimation(this.IMAGES_BOTTLE);
         }, 400)
     }

@@ -9,7 +9,8 @@
     <script src="models/drawable-object.class.js"></script>
     <script src="models/movable-object.class.js"></script>
 
-
+    <script src="models/keyboard.class.js"></script>
+    <script src="js/game.js"></script>
     <script src="models/character.class.js"></script>
     <script src="models/chicken.class.js"></script>
     <script src="models/chickensmall.class.js"></script>
@@ -18,26 +19,30 @@
     <script src="models/bottle-object.class.js"></script>
     <script src="models/background-object.class.js"></script>
     <script src="models/statusbar-healt.class.js"></script>
+    <script src="models/setting-icon.class.js"></script>
     <script src="models/bottle-statusbar.class.js"></script>
     <script src="models/coin-statusbar.class.js"></script>
+    <script src="models/enboss-statusbar.class.js"></script>
     <script src="models/world.class.js"></script>
-    <script src="models/keyboard.class.js"></script>
+
     <script src="models/level.class.js"></script>
     <script src="models/dead-chicken.class.js"></script>
     <script src="models/dead-small-chicken.class.js"></script>
     <script src="models/endboss.class.js"></script>
     <script src="models/throwable-object.class.js"></script>
     <script src="levels/level1.js"></script>
-    <script src="js/game.js"></script>
+
 
     <title>El pollo locco</title>
 </head>
 
-<body onload="init()">
+<body>
     <h1>El pollo loco</h1>
-
-    <canvas id="canvas" width="720" height="480">
-    </canvas>
+    <div class="startScreen" id="startScreen">
+        <button class="startButton" onclick="StartGame">StartGame</button>
+    </div>
+    <canvas id="canvas" width="720" height="480"></canvas>
+    <div class="endScreen" id="endScreen" style="display: none;"></div>
 
 </body>
 

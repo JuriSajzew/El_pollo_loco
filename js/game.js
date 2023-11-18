@@ -4,14 +4,20 @@ let keyboard = new Keyboard();
 let intervalIds = [];
 let i = 1;
 
+function setStoppableInterval(fn, time) {
+    let id = setInterval(fn, time);
+    intervalIds.push(id);
+}
+
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
 }
 
-function setStoppableInterval(fn, time) {
-    let id = setInterval(fn, time);
-    intervalIds.push(id);
+function StartGame() {
+    initLevel();
+    document.getElementById('startScreen').style.display = 'none';
+    init();
 }
 
 function stopGame() {

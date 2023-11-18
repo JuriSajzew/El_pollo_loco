@@ -62,7 +62,8 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-20.png'
     ];
     world;
-    speed = 5;
+    speed = 8;
+    speedY = 2;
     idleTimeout = 0;
     offset = {
         top: 120,
@@ -70,7 +71,7 @@ class Character extends MovableObject {
         left: 40,
         right: 30
     }
-
+    jumpingOfChicken = false;
     walking_sound = new Audio('audio/running.mp3');
 
     constructor() {
@@ -127,6 +128,8 @@ class Character extends MovableObject {
 
     characterJump() {
         if (this.world.keyboard.UP && !this.isAboveGround()) {
+            this.jumpingOfChicken = true;
+            console.log(this.jumpingOfChicken);
             this.jump();
             this.jumping();
         }
@@ -152,7 +155,10 @@ class Character extends MovableObject {
 
     characterDead() {
         if (this.isDead()) {
-            this.playAnimation(this.IMAGES_DEAD)
+            this.playAnimation(this.IMAGES_DEAD);
+            setTimeout(() => {
+                stopGame();
+            })
         }
     }
 
