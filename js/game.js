@@ -39,7 +39,6 @@ function soundButton() {
 
 function restartButton() {
     document.getElementById('endScreen').style.display = 'none';
-
     StartGame();
 }
 
