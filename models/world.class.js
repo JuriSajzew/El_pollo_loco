@@ -59,7 +59,6 @@ class World {
             let bottle = new ThrowableObject(this.character.x, this.character.y);
             this.throwableobjects.push(bottle);
             this.character.throwBottle();
-            console.log(this.throwableobjects);
             this.StatusBarBottle.setpercentTage(this.character.bottle);
             if (this.character.bottle === 0) {
                 this.canThrowBottle = false;
@@ -73,7 +72,6 @@ class World {
                 this.bottle_sound.play();
                 this.level.bottles.splice(indexOfbottle, 1);
                 this.character.collectBottle();
-                console.log(this.throwableobjects);
                 this.StatusBarBottle.setpercentTage(this.character.bottle);
             }
         }, 10);
@@ -92,11 +90,9 @@ class World {
         this.level.enemies.forEach((enemy, indexOfEnemies) => {
             if (this.character.isColliding(enemy) && this.character.isAboveGround && this.character.speedY < 0) {
                 this.checkKindOfEnemy(enemy, indexOfEnemies);
-                console.log(this.character.jumpingOfChicken);
                 setTimeout(() => {
                     this.deadEnemy.splice(this.enemy);
                     this.character.jumpingOfChicken = false;
-                    console.log(this.character.jumpingOfChicken);
                 }, 500);
             }
         })
@@ -118,7 +114,6 @@ class World {
                 if (bottle.isColliding(endboss)) {
                     endboss.hit();
                     this.StatusBarEndboss.setpercentTage(endboss.energy);
-                    console.log(endboss.energy);
                 }
             })
         })
@@ -137,10 +132,10 @@ class World {
     checkKindOfEnemy(enemy, indexOfEnemies) {
         let deadEnemy;
         if (enemy instanceof Chicken) {
-            deadEnemy = new DeadChicken(enemy.x, enemy.y);
+            deadEnemy = new DeadChicken();
             this.deadChickenSound.play();
         } else {
-            deadEnemy = new DeadSmallChicken(enemy.posX, enemy.posY);
+            deadEnemy = new DeadSmallChicken();
             this.deadChickenSound.play();
         }
         this.deadEnemy.push(deadEnemy);
@@ -196,7 +191,7 @@ class World {
         }
 
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
+        //mo.drawFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
@@ -214,5 +209,21 @@ class World {
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
+    }
+
+    mute() {
+        this.deadChickenSound.muted = true;
+        this.bottle_sound.muted = true;
+        this.coin_sound.muted = true;
+        this.hurt_character_sound.muted = true;
+        this.character.walking_sound.muted = true;
+    }
+
+    unmute(){
+        this.deadChickenSound.muted = false;
+        this.bottle_sound.muted = false;
+        this.coin_sound.muted = false;
+        this.hurt_character_sound.mute = false;
+        this.character.walking_sound.muted = false;
     }
 }

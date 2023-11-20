@@ -129,7 +129,6 @@ class Character extends MovableObject {
     characterJump() {
         if (this.world.keyboard.UP && !this.isAboveGround()) {
             this.jumpingOfChicken = true;
-            console.log(this.jumpingOfChicken);
             this.jump();
             this.jumping();
         }
@@ -139,7 +138,6 @@ class Character extends MovableObject {
         if (this.isAboveGround()) {
             this.playAnimation(this.IMAGES_IDLE);
             this.idleTimeout += 150;
-            console.log(this.idleTimeout);
             if (this.idleTimeout >= 5000) {
                 this.playAnimation(this.IMAGES_LONG_IDLE);
             }
@@ -156,8 +154,10 @@ class Character extends MovableObject {
     characterDead() {
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
+            this.walking_sound.pause();
             setTimeout(() => {
                 stopGame();
+                document.getElementById('endScreen').style.display = 'block';
             })
         }
     }

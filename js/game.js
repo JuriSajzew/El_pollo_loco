@@ -10,18 +10,37 @@ function setStoppableInterval(fn, time) {
 }
 
 function init() {
+
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
 }
 
 function StartGame() {
-    initLevel();
     document.getElementById('startScreen').style.display = 'none';
-    init();
+    initLevel();
+    init()
 }
 
 function stopGame() {
     intervalIds.forEach(clearInterval);
+}
+
+function mutteButton() {
+    document.getElementById('muteButton').style.display = 'none';
+    document.getElementById('tonButton').style.display = 'block';
+    world.mute();
+}
+
+function soundButton() {
+    document.getElementById('tonButton').style.display = 'none';
+    document.getElementById('muteButton').style.display = 'block';
+    world.unmute();
+}
+
+function restartButton() {
+    document.getElementById('endScreen').style.display = 'none';
+
+    StartGame();
 }
 
 window.addEventListener("keydown", (e) => {

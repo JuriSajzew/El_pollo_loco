@@ -14,19 +14,25 @@ canvas {
     background-color: black;
 }
 
+.gameContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
 .startScreen,
 .endScreen {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 480px;
+    align-items: baseline;
+    height: 490px;
     width: 780px;
     position: absolute;
     border-radius: 16px;
-    top: 150px;
     background-size: cover;
     z-index: 1;
-    background-position: 50% 50%;
+    background-position: 65% 35%;
 }
 
 .startScreen {
@@ -35,23 +41,74 @@ canvas {
 
 .endScreen {
     background-image: url('img/9_intro_outro_screens/game_over/you lost.png');
+    background-color: rgba(197, 192, 192, 0.5);
 }
 
-.startButton {
+.startButton, .restartButton {
     height: 50px;
     width: 150px;
     border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    top: 30px;
     background-color: rgb(191, 100, 38);
     color: whitesmoke;
     font-weight: bold;
     font-size: 20px;
+    margin-top: 30px;
 }
 
-.startButton:hover {
+.startButton:hover, .restartButton:hover {
+    cursor: pointer;
+}
+
+.canvasContainer {
+    width: 720px;
+    height: 480px;
+}
+
+.infoButton {
+    display: flex;
+    height: 50px;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}
+
+.tonButton {
+    background-size: 75%;
+    background-image: url('img/icons/sound.svg');
+}
+
+.muteButton {
+    background-image: url('img/icons/volume_muted.svg');
+    background-size: 75%;
+}
+
+.settingsButton {
+    background-image: url('img/icons/setting.svg');
+    background-size: 75%;
+}
+
+.fullscreenButton {
+    background-size: 65%;
+    background-image: url('img/icons/fullscreen.svg');
+}
+
+.fullscreenButton, .settingsButton, .tonButton, .muteButton {
+    height: 40px;
+    width: 40px;
+    background-color: rgb(191, 100, 38);
+    border-radius: 20px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    border: none;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.fullscreenButton:hover, .settingsButton:hover, .tonButton:hover, .muteButton:hover {
     cursor: pointer;
 }
