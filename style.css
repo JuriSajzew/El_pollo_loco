@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'zabars';
+    src: url('fonts/zabars.ttf') format('truetype');
+}
+
 body {
     margin: 0;
     display: flex;
@@ -8,6 +13,22 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     height: 100vh;
+    font-family: 'zabars', Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    font-size: 64px;
+    letter-spacing: 5px;
+    text-shadow: 4px 4px 8px rgba(197, 192, 192, 0.5);
+    margin-bottom: 0;
+}
+
+h5 {
+    font-size: 24px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0;
+    font-weight: lighter;
 }
 
 canvas {
@@ -86,8 +107,8 @@ canvas {
 }
 
 .settingsButton {
-    background-image: url('img/icons/setting.svg');
-    background-size: 75%;
+    background-image: url('img/icons/question-mark.svg');
+    background-size: 50%;
 }
 
 .fullscreenButton {
@@ -95,7 +116,14 @@ canvas {
     background-image: url('img/icons/fullscreen.svg');
 }
 
-.fullscreenButton, .settingsButton, .tonButton, .muteButton {
+.normalScreenButton {
+    background-size: 65%;
+    background-image: url('img/icons/reduce-screen.svg');
+}
+
+
+
+.fullscreenButton, .settingsButton, .tonButton, .muteButton, .normalScreenButton {
     height: 40px;
     width: 40px;
     background-color: rgb(191, 100, 38);
@@ -109,6 +137,43 @@ canvas {
     justify-content: flex-end;
 }
 
-.fullscreenButton:hover, .settingsButton:hover, .tonButton:hover, .muteButton:hover {
+.fullscreenButton:hover, .normalScreenButton:hover, .settingsButton:hover, .tonButton:hover, .muteButton:hover, .closeButton:hover {
     cursor: pointer;
+}
+
+.infoContain {
+    height: 420px;
+    width: 650px;
+    position: absolute;
+    z-index: 1;
+}
+
+.infoContain1 {
+    height: 420px;
+    width: 650px;
+    background-color: rgba(197, 192, 192, 0.8);
+    font-family: 'ZABARS';
+}
+
+.infoContain2 {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 20px;
+    padding-top: 20px;
+}
+
+.closeButton {
+    height: 30px;
+    width: 30px;
+    border-radius: 30px;
+    justify-content: right;
+    display: flex;
+}
+
+.fullScreen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-image: url('img/Background/horse-2255876_1920.jpg');
 }

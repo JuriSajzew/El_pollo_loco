@@ -30,6 +30,7 @@ class MovableObject extends DrawableObject {
         } else {
             return this.y < 180
         }
+        
     }
 
 

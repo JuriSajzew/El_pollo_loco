@@ -61,6 +61,7 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-19.png',
         'img/2_character_pepe/1_idle/long_idle/I-20.png'
     ];
+    y = 78;
     world;
     speed = 8;
     speedY = 2;
@@ -93,20 +94,25 @@ class Character extends MovableObject {
 
     animate() {
         this.characterMove();
+        this.characterAnimate();
     }
 
-    characterMove() {
+    characterAnimate() {
         setStoppableInterval(() => {
             this.walking_sound.pause();
+            this.walkingCharacter();
             this.characterMoveRight();
             this.characterMoveLeft();
-            this.walkingCharacter();
             this.characterJump();
             this.characterDead();
             this.characterHurt();
-            //this.characterIdle();
             this.world.camera_x = -this.x + 100;
-        }, 1000 / 30);
+        }, 1000 / 20);
+    }
+    characterMove() {
+        setStoppableInterval(() => {
+            this.characterSleep();
+        }, 150);
     }
 
 
@@ -128,28 +134,36 @@ class Character extends MovableObject {
 
     characterJump() {
         if (this.world.keyboard.UP && !this.isAboveGround()) {
+            this.handleKeyPress();
             this.jumpingOfChicken = true;
             this.jump();
             this.jumping();
         }
     }
 
-    characterIdle() {
-        if (this.isAboveGround()) {
-            this.playAnimation(this.IMAGES_IDLE);
-            this.idleTimeout += 150;
-            if (this.idleTimeout >= 5000) {
-                this.playAnimation(this.IMAGES_LONG_IDLE);
-            }
+    characterSleep() {
+        // Spiele die normale Idle-Animation ab
+        this.playAnimation(this.IMAGES_IDLE);
+        // Setze das Intervall für die Idle-Timeout-Zeit
+        this.idleTimeout += 100;
+        // Wenn das Idle-Timeout einen Schwellenwert erreicht, spiele die Langzeit-Idle-Animation ab
+        if (this.idleTimeout >= 5000) {
+            this.playAnimation(this.IMAGES_LONG_IDLE);
         }
+    }
+
+    // Event-Handler für Tastendruck
+    handleKeyPress() {
+        // Setze die idleIntervalId auf 0 oder null zurück
+        this.idleTimeout = 0; // oder this.idleIntervalId = null;
     }
 
     walkingCharacter() {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
             this.playAnimation(this.IMAGES_WALKING);
+            this.handleKeyPress();
         }
     }
-
 
     characterDead() {
         if (this.isDead()) {
@@ -157,7 +171,7 @@ class Character extends MovableObject {
             this.walking_sound.pause();
             setTimeout(() => {
                 stopGame();
-                document.getElementById('endScreen').style.display = 'block';
+                document.getElementById('endScreen').style.display = '';
             })
         }
     }

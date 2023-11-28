@@ -48,7 +48,7 @@ class Endboss extends MovableObject {
 
     constructor() {
         super().loadImage(this.IMAGES_ENDBOSS_WALKING[0]);
-        this.x = 2200 + Math.random() * 500;
+        this.x = 2000 + Math.random() * 500;
         this.speed = 1 + Math.random() * 0.25;
         this.loadAllImages();
         this.animate();
@@ -82,16 +82,20 @@ class Endboss extends MovableObject {
 
     EndbossDead() {
         if (this.isDead()) {
-            setTimeout(() => {
+            setStoppableInterval(() => {
                 this.playAnimation(this.IMAGES_ENDBOSS_DEAD);
-            }, 1000 / 60);
-            stopGame();
+            }, 1000 / 60)
+            setTimeout(() => {
+                stopGame();
+                document.getElementById('endScreen').style.display = '';
+            }, 6000 / 60);
         }
     }
 
     EndbossHurt() {
         if (this.isHurt()) {
             this.playAnimation(this.IMAGES_ENDBOSS_HURT);
+            world.hurt_endboss_sound.play();
         }
     }
 

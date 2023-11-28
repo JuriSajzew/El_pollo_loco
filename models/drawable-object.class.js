@@ -1,21 +1,11 @@
 class DrawableObject {
     x = 120;
-    y = 80;
+    y = 90;
     img;
     width = 100;
     height = 250;
     imageCache = {};
     currentImage = 0;
-
-    //drawFrame(ctx) {
-    //    if (this instanceof Character || this instanceof Chicken || this instanceof Chickensmall || this instanceof Endboss) {
-    //        ctx.beginPath();
-    //        ctx.lineWidth = '5';
-    //        ctx.strokeStyle = 'blue';
-    //        ctx.rect(this.x, this.y, this.width, this.height);
-    //        ctx.stroke();
-    //    }
-    //}
 
     draw(ctx) {
         try {

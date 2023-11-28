@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fonts/zabars.ttf">
+
 
     <script src="models/drawable-object.class.js"></script>
     <script src="models/movable-object.class.js"></script>
@@ -36,23 +38,29 @@
 </head>
 
 <body>
-    <h1>El pollo loco</h1>
-    <div class="gameContainer">
-        <div class="startScreen" id="startScreen">
-            <button class="startButton" onclick="StartGame()">StartGame</button>
-        </div>
-
-        <div class="canvasContainer">
-            <div id="infoButton" class="infoButton">
-                <button class="tonButton" id="tonButton" onclick="soundButton()" style="display: none;"></button>
-                <button class="muteButton" id="muteButton" onclick="mutteButton()"></button>
-                <button class="settingsButton" onclick="settingsButton()"></button>
-                <button class="fullscreenButton" onclick="fullscreenButton()"></button>
+    <div id="fullScreen" class="fullScreen">
+        <h1>El Pollo Loco</h1>
+        <div class="gameContainer">
+            <div class="startScreen" id="startScreen">
+                <button class="startButton" onclick="StartGame()">StartGame</button>
             </div>
-            <canvas id="canvas" width="720" height="480"></canvas>
-        </div>
-        <div class="endScreen" id="endScreen" style="display: none;">
-            <button onclick="restartButton()" id="restartButton" class="restartButton">restart</button>
+            <div class="canvasContainer" id="canvasContainer">
+                <div id="infoButton" class="infoButton">
+                    <button class="tonButton" id="tonButton" onclick="soundButton()" style="display: none;"></button>
+                    <button class="muteButton" id="muteButton" onclick="mutteButton()"></button>
+                    <button class="settingsButton" onclick="settingsButton()"></button>
+                    <button class="fullscreenButton" id="fullscreenButton" onclick="fullscreenButton()"></button>
+                    <button class="normalScreenButton" id="normalScreenButton" onclick="normalScreenButton()"
+                        style="display: none;"></button>
+                </div>
+                <canvas id="canvas" width="720" height="480"></canvas>
+            </div>
+            <div class="infoContain" id="infoContain" style="display: none;"></div>
+            <div class="endScreen" id="endScreen" style="display: none;">
+                <div>
+                    <button onclick="restartButton()" id="restartButton" class="restartButton">restart</button>
+                </div>
+            </div>
         </div>
     </div>
 </body>

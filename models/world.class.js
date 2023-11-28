@@ -20,6 +20,8 @@ class World {
     coin_sound = new Audio('audio/coin_sound.mp3');
     bottle_sound = new Audio('audio/bottle_sound.mp3');
     hurt_character_sound = new Audio('audio/hurt_character.mp3');
+    background_sound = new Audio('audio/background_sound.mp3');
+    hurt_endboss_sound = new Audio('audio/endboss_sound.mp3');
 
     /**
      * leere Arrays
@@ -191,7 +193,6 @@ class World {
         }
 
         mo.draw(this.ctx);
-        //mo.drawFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);
@@ -217,13 +218,17 @@ class World {
         this.coin_sound.muted = true;
         this.hurt_character_sound.muted = true;
         this.character.walking_sound.muted = true;
+        this.hurt_endboss_sound.muted = true;
+        this.background_sound.muted = true;
     }
 
-    unmute(){
+    unmute() {
         this.deadChickenSound.muted = false;
         this.bottle_sound.muted = false;
         this.coin_sound.muted = false;
         this.hurt_character_sound.mute = false;
         this.character.walking_sound.muted = false;
+        this.hurt_endboss_sound.muted = false;
+        this.background_sound.muted = false;
     }
 }
