@@ -74,6 +74,7 @@ class Character extends MovableObject {
     }
     jumpingOfChicken = false;
     walking_sound = new Audio('audio/running.mp3');
+    snoring_charcter_sound = new Audio('audio/snoring.mp3');
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
@@ -107,14 +108,14 @@ class Character extends MovableObject {
             this.characterDead();
             this.characterHurt();
             this.world.camera_x = -this.x + 100;
-        }, 1000 / 20);
+        }, 1000 / 25);
     }
+
     characterMove() {
         setStoppableInterval(() => {
             this.characterSleep();
         }, 150);
     }
-
 
     characterMoveRight() {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -142,20 +143,17 @@ class Character extends MovableObject {
     }
 
     characterSleep() {
-        // Spiele die normale Idle-Animation ab
         this.playAnimation(this.IMAGES_IDLE);
-        // Setze das Intervall für die Idle-Timeout-Zeit
         this.idleTimeout += 100;
-        // Wenn das Idle-Timeout einen Schwellenwert erreicht, spiele die Langzeit-Idle-Animation ab
         if (this.idleTimeout >= 5000) {
+            this.snoring_charcter_sound.play();
             this.playAnimation(this.IMAGES_LONG_IDLE);
         }
     }
 
-    // Event-Handler für Tastendruck
     handleKeyPress() {
-        // Setze die idleIntervalId auf 0 oder null zurück
-        this.idleTimeout = 0; // oder this.idleIntervalId = null;
+        this.idleTimeout = 0;
+        this.snoring_charcter_sound.pause();
     }
 
     walkingCharacter() {
@@ -184,10 +182,11 @@ class Character extends MovableObject {
 
     jumping() {
         if (this.isAboveGround()) {
-            this.playAnimation(this.IMAGES_JUMPING);
+            setStoppableInterval(() => {
+                this.playAnimation(this.IMAGES_JUMPING);
+            }, 400);
         }
-    };
-
+    }
 
     jump() {
         this.speedY = 30;

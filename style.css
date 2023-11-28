@@ -12,7 +12,6 @@ body {
     background-image: url('img/Background/horse-2255876_1920.jpg');
     background-position: center;
     background-repeat: no-repeat;
-    height: 100vh;
     font-family: 'zabars', Arial, Helvetica, sans-serif;
 }
 
@@ -33,6 +32,7 @@ h5 {
 
 canvas {
     background-color: black;
+    display: block;
 }
 
 .gameContainer {
@@ -81,11 +81,6 @@ canvas {
 
 .startButton:hover, .restartButton:hover {
     cursor: pointer;
-}
-
-.canvasContainer {
-    width: 720px;
-    height: 480px;
 }
 
 .infoButton {
@@ -144,7 +139,7 @@ canvas {
 .infoContain {
     height: 420px;
     width: 650px;
-    position: absolute;
+    position: fixed;
     z-index: 1;
 }
 
@@ -176,4 +171,107 @@ canvas {
     justify-content: center;
     flex-direction: column;
     background-image: url('img/Background/horse-2255876_1920.jpg');
+}
+
+.mobileButtonContain {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 60px;
+    width: 100%;
+    position: absolute;
+    z-index: 3;
+    bottom: 0;
+}
+
+.mobileButtonLeft {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    margin-right: 165px;
+
+}
+
+.mobileButtonRight {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    margin-left: 165px;
+}
+
+.mobileButton {
+    height: 40px;
+    width: 40px;
+    border-radius: 50px;
+    border: none;
+    margin-left: 20px;
+    background-color: rgb(173, 122, 88);
+}
+
+.mobileButton1 {
+    background-image: url('img/icons/top-icon.svg');
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
+.mobileButton2 {
+    background-image: url('img/6_salsa_bottle/salsa_bottle.png');
+    background-size: 95%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.mobileButton3 {
+    background-image: url('img/icons/left-icon.svg');
+    background-size: 40%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.mobileButton4 {
+    background-image: url('img/icons/right-icon.svg');
+    background-size: 40%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Smartphones*/
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100vh;
+        aspect-ratio: 2.5/1;
+    }
+}
+
+@media only screen and (max-height: 560px) {
+    .startScreen, .endScreen {
+        height: 100vh;
+    }
+
+    h1 {
+        display: none;
+    }
+
+    .startScreen, .endScreen {
+        height: 100vh;
+        width: 100%;
+        border-radius: 0;
+    }
+
+    .mobileButtonContain {
+        display: flex;
+    }
+
+    .fullscreenButton, .settingsButton, .tonButton, .muteButton, .normalScreenButton {
+        height: 30px;
+        width: 30px;
+    }
 }

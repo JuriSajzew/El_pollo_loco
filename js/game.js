@@ -13,6 +13,10 @@ function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     world.background_sound.play();
+    mobileTouchStart();
+    mobileTouchStop();
+    window.onload = checkCanvasHeight();
+    window.addEventListener('resize', checkCanvasHeight());
 }
 
 function startAnimations() {
@@ -161,3 +165,55 @@ window.addEventListener("keyup", (e) => {
         keyboard.D = false;
     }
 });
+
+function mobileTouchStart() {
+    document.getElementById('mobileButtonRight').addEventListener('touchstart', (ev) => {
+        keyboard.RIGHT = true;
+        ev.preventDefault();
+    }); document.getElementById('mobileButtonLeft').addEventListener('touchstart', (ev) => {
+        keyboard.LEFT = true;
+        ev.preventDefault();
+    }); document.getElementById('mobileButtonThrow').addEventListener('touchstart', (ev) => {
+        keyboard.D = true;
+        ev.preventDefault();
+    }); document.getElementById('mobileButtonJump').addEventListener('touchstart', (ev) => {
+        keyboard.UP = true;
+        ev.preventDefault();
+    });
+}
+
+function mobileTouchStop() {
+    document.getElementById('mobileButtonRight').addEventListener('touchend', (ev) => {
+        keyboard.RIGHT = false;
+        ev.preventDefault();
+    });
+    document.getElementById('mobileButtonLeft').addEventListener('touchend', (ev) => {
+        keyboard.LEFT = false;
+        ev.preventDefault();
+    });
+    document.getElementById('mobileButtonThrow').addEventListener('touchend', (ev) => {
+        keyboard.D = false;
+        ev.preventDefault();
+    });
+    document.getElementById('mobileButtonJump').addEventListener('touchend', (ev) => {
+        keyboard.UP = false;
+        ev.preventDefault();
+    });
+}
+
+function checkCanvasHeight() {
+    const canvas = document.getElementById('canvas'); // Ersetze 'yourCanvasId' durch die tatsächliche ID deines Canvas-Elements
+
+    if (canvas) {
+        const canvasHeight = canvas.height;
+
+        // Überprüfe, ob die Höhe des Canvas kleiner als 560 Pixel ist
+        if (canvasHeight < 490) {
+            // Wenn ja, zeige das Element mit der Klasse 'mobileButtonContain' an
+            document.querySelector('.mobileButtonContain').style.display = 'flex';
+        } else {
+            // Andernfalls, wenn die Höhe des Canvas größer oder gleich 560 Pixel ist, verstecke das Element
+            document.querySelector('.mobileButtonContain').style.display = 'none';
+        }
+    }
+}
