@@ -5,6 +5,7 @@ class Endboss extends MovableObject {
     hadFirstContact = false;
     energy = 80;
 
+
     IMAGES_ENDBOSS_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
         'img/4_enemie_boss_chicken/1_walk/G2.png',
@@ -82,14 +83,23 @@ class Endboss extends MovableObject {
 
     EndbossDead() {
         if (this.isDead()) {
-            setStoppableInterval(() => {
-                this.playAnimation(this.IMAGES_ENDBOSS_DEAD);
-            }, 1000 / 60)
-            setTimeout(() => {
-                stopGame();
-                document.getElementById('endScreen').style.display = '';
-            }, 6000 / 60);
+            this.deadEndbossAnimation();
+            this.gameOver();
         }
+    }
+
+    deadEndbossAnimation() {
+        setStoppableInterval(() => {
+            this.playAnimation(this.IMAGES_ENDBOSS_DEAD);
+            world.win_sound.play();
+        }, 1000 / 20)
+    }
+
+    gameOver() {
+        setTimeout(() => {
+            stopGame();
+            document.getElementById('endScreen').style.display = '';
+        }, 1250);
     }
 
     EndbossHurt() {

@@ -61,27 +61,29 @@ class Character extends MovableObject {
         'img/2_character_pepe/1_idle/long_idle/I-19.png',
         'img/2_character_pepe/1_idle/long_idle/I-20.png'
     ];
-    y = 78;
+    y = 160;
     world;
     speed = 8;
     speedY = 2;
     idleTimeout = 0;
     offset = {
         top: 120,
-        bottom: 30,
+        bottom: 20,
         left: 40,
-        right: 30
+        right: 40
     }
+
     jumpingOfChicken = false;
     walking_sound = new Audio('audio/running.mp3');
     snoring_charcter_sound = new Audio('audio/snoring.mp3');
+    jump_sound = new Audio('audio/jump.mp3');
+    game_over_sound = new Audio('audio/game_over.mp3');
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
         this.applyGravity();
         this.loadAllImages();
         this.animate();
-
     }
 
     loadAllImages() {
@@ -98,23 +100,14 @@ class Character extends MovableObject {
         this.characterAnimate();
     }
 
-    characterAnimate() {
+    characterMove() {
         setStoppableInterval(() => {
             this.walking_sound.pause();
             this.walkingCharacter();
             this.characterMoveRight();
             this.characterMoveLeft();
-            this.characterJump();
-            this.characterDead();
-            this.characterHurt();
             this.world.camera_x = -this.x + 100;
         }, 1000 / 25);
-    }
-
-    characterMove() {
-        setStoppableInterval(() => {
-            this.characterSleep();
-        }, 150);
     }
 
     characterMoveRight() {
@@ -133,12 +126,25 @@ class Character extends MovableObject {
         }
     }
 
+    characterAnimate() {
+        setStoppableInterval(() => {
+            this.characterSleep();
+            this.characterJump();
+            this.characterDead();
+            this.characterHurt();
+        }, 150);
+    }
+
     characterJump() {
-        if (this.world.keyboard.UP && !this.isAboveGround()) {
+        if (this.isAboveGround()) {
             this.handleKeyPress();
+            this.playAnimation(this.IMAGES_JUMPING);
+            this.jump_sound.play();
+        }
+        if (this.world.keyboard.UP && !this.isAboveGround()) {
             this.jumpingOfChicken = true;
+            this.handleKeyPress();
             this.jump();
-            this.jumping();
         }
     }
 
@@ -146,9 +152,13 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_IDLE);
         this.idleTimeout += 100;
         if (this.idleTimeout >= 5000) {
-            this.snoring_charcter_sound.play();
-            this.playAnimation(this.IMAGES_LONG_IDLE);
+            this.snoringAnimation();
         }
+    }
+
+    snoringAnimation() {
+        this.snoring_charcter_sound.play();
+        this.playAnimation(this.IMAGES_LONG_IDLE);
     }
 
     handleKeyPress() {
@@ -165,26 +175,29 @@ class Character extends MovableObject {
 
     characterDead() {
         if (this.isDead()) {
+            this.deadAnimation();
+            this.gameOver();
+        }
+    }
+
+    deadAnimation() {
+        setStoppableInterval(() => {
             this.playAnimation(this.IMAGES_DEAD);
             this.walking_sound.pause();
-            setTimeout(() => {
-                stopGame();
-                document.getElementById('endScreen').style.display = '';
-            })
-        }
+            this.game_over_sound.play();
+        }, 1000 / 20);
+    }
+
+    gameOver() {
+        setTimeout(() => {
+            stopGame();
+            document.getElementById('endScreen').style.display = '';
+        }, 1250);
     }
 
     characterHurt() {
         if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);
-        }
-    }
-
-    jumping() {
-        if (this.isAboveGround()) {
-            setStoppableInterval(() => {
-                this.playAnimation(this.IMAGES_JUMPING);
-            }, 400);
         }
     }
 

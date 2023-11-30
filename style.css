@@ -13,6 +13,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     font-family: 'zabars', Arial, Helvetica, sans-serif;
+    height: 100vh;
 }
 
 h1 {
@@ -31,7 +32,6 @@ h5 {
 }
 
 canvas {
-    background-color: black;
     display: block;
 }
 
@@ -237,6 +237,39 @@ canvas {
     background-position: center;
 }
 
+#loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(173, 122, 88);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+#loader {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid rgb(173, 122, 88);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
 /* Smartphones*/
 @media only screen and (max-width: 720px) {
     canvas {
@@ -273,5 +306,21 @@ canvas {
     .fullscreenButton, .settingsButton, .tonButton, .muteButton, .normalScreenButton {
         height: 30px;
         width: 30px;
+    }
+
+    .infoContain {
+        height: 370px;
+    }
+
+    .infoContain1 {
+        height: 320px;
+    }
+
+    h5 {
+        font-size: 21px;
+    }
+
+    .infoContain2 {
+        padding-top: 10px;
     }
 }

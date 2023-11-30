@@ -12,6 +12,7 @@ function setStoppableInterval(fn, time) {
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
+    hideLoader();
     world.background_sound.play();
     mobileTouchStart();
     mobileTouchStop();
@@ -40,9 +41,21 @@ function animateArray(array) {
 
 function StartGame() {
     document.getElementById('startScreen').style.display = 'none';
-    initLevel();
-    init()
+    showLoader();
+    setTimeout(() => {
+        initLevel();
+        init();
+    }, 4000);
 }
+
+function showLoader() {
+    document.getElementById("loader-wrapper").style.display = "flex";
+}
+
+function hideLoader() {
+    document.getElementById("loader-wrapper").style.display = "none";
+}
+
 
 function stopGame() {
     intervalIds.forEach(clearInterval);
@@ -69,6 +82,10 @@ function restartButton() {
 function settingsButton() {
     stopGame();
     document.getElementById('infoContain').style.display = 'block';
+    textInfoContain();
+}
+
+function textInfoContain() {
     document.getElementById('infoContain').innerHTML = `
         <div class="infoContain1">
             <div class="infoContain2">
@@ -91,6 +108,7 @@ function closeDetailContain() {
     document.getElementById('infoContain').style.display = 'none';
     startAnimations();
     world.run();
+    world.unmute();
 }
 
 function fullscreenButton() {
@@ -202,17 +220,12 @@ function mobileTouchStop() {
 }
 
 function checkCanvasHeight() {
-    const canvas = document.getElementById('canvas'); // Ersetze 'yourCanvasId' durch die tatsächliche ID deines Canvas-Elements
-
+    const canvas = document.getElementById('canvas');
     if (canvas) {
         const canvasHeight = canvas.height;
-
-        // Überprüfe, ob die Höhe des Canvas kleiner als 560 Pixel ist
         if (canvasHeight < 490) {
-            // Wenn ja, zeige das Element mit der Klasse 'mobileButtonContain' an
             document.querySelector('.mobileButtonContain').style.display = 'flex';
         } else {
-            // Andernfalls, wenn die Höhe des Canvas größer oder gleich 560 Pixel ist, verstecke das Element
             document.querySelector('.mobileButtonContain').style.display = 'none';
         }
     }
