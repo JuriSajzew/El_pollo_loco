@@ -67,7 +67,7 @@ class Character extends MovableObject {
     speedY = 2;
     idleTimeout = 0;
     offset = {
-        top: 100,
+        top: 120,
         bottom: 10,
         left: 10,
         right: 25

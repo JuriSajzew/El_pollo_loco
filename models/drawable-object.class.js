@@ -8,7 +8,7 @@ class DrawableObject {
     currentImage = 0;
 
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof Chickensmall || this instanceof Endboss) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof Chickensmall || this instanceof Endboss || this instanceof CoinObjekt || this instanceof ThrowableObject || this instanceof BottleObject) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'red';
@@ -16,7 +16,7 @@ class DrawableObject {
                 (this.x + this.offset.left), (this.y + this.height - this.offset.bottom) - (this.y + this.offset.top));
             ctx.stroke();
         }
-        if (this instanceof Character || this instanceof Chicken || this instanceof Chickensmall || this instanceof Endboss) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof Chickensmall || this instanceof Endboss || this instanceof CoinObjekt || this instanceof ThrowableObject || this instanceof BottleObject) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';
