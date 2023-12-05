@@ -3,13 +3,18 @@ let world;
 let keyboard = new Keyboard();
 let intervalIds = [];
 let i = 1;
-
+/**
+ * 
+ */
 function setStoppableInterval(fn, time) {
     let id = setInterval(fn, time);
     intervalIds.push(id);
 }
-
+/**
+ * Function for loading the entire map
+ */
 function init() {
+    localStorage.clear();
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     hideLoader();
@@ -19,26 +24,34 @@ function init() {
     window.onload = checkCanvasHeight();
     window.addEventListener('resize', checkCanvasHeight());
 }
-
+/**
+ * Function for starting all animations
+ */
 function startAnimations() {
-    animateItems(world.character);
     animateArray(world.level.endboss);
     animateArray(world.level.coins);
     animateArray(world.level.enemies);
     animateArray(world.level.clouds);
     animateArray(world.level.bottles);
+    animateItems(world.character);
 }
-
+/**
+ * 
+ */
 function animateItems(item) {
     item.animate();
 }
-
+/**
+ * 
+ */
 function animateArray(array) {
     array.forEach(item => {
         animateItems(item);
     });
 }
-
+/**
+ * the loading progress is displayed here 
+ */
 function StartGame() {
     document.getElementById('startScreen').style.display = 'none';
     showLoader();
@@ -55,36 +68,71 @@ function showLoader() {
 function hideLoader() {
     document.getElementById("loader-wrapper").style.display = "none";
 }
-
-
+/**
+ * 
+ */
 function stopGame() {
     intervalIds.forEach(clearInterval);
     world.mute();
 }
-
+/**
+ * button to mute the sound
+ */
 function mutteButton() {
     document.getElementById('muteButton').style.display = 'none';
     document.getElementById('tonButton').style.display = 'block';
     world.mute();
+    saveLastClickedButton('muteButton');
 }
-
+/**
+ * button to switch the sound on
+ */
 function soundButton() {
     document.getElementById('tonButton').style.display = 'none';
     document.getElementById('muteButton').style.display = 'block';
     world.unmute();
+    saveLastClickedButton('soundButton');
 }
 
+function saveLastClickedButton(buttonId) {
+    localStorage.setItem('lastClickedButton', buttonId);
+}
+
+function loadLastClickedButton() {
+    return localStorage.getItem('lastClickedButton');
+}
+
+function initializeButtonState() {
+    var lastClickedButton = loadLastClickedButton();
+    if (lastClickedButton === 'muteButton') {
+        document.getElementById('tonButton').style.display = 'block';
+        document.getElementById('muteButton').style.display = 'none';
+    } else {
+        document.getElementById('tonButton').style.display = 'none';
+        document.getElementById('muteButton').style.display = 'block';
+        world.unmute();
+    }
+}
+
+/**
+ * button to restart the game
+ */
 function restartButton() {
     document.getElementById('endScreen').style.display = 'none';
     StartGame();
+    initializeButtonState();
 }
-
+/**
+ * infoButton
+ */
 function settingsButton() {
     stopGame();
     document.getElementById('infoContain').style.display = 'block';
     textInfoContain();
 }
-
+/**
+ * text description of the game
+ */
 function textInfoContain() {
     document.getElementById('infoContain').innerHTML = `
         <div class="infoContain1">
@@ -103,25 +151,23 @@ function textInfoContain() {
         </div>
 `;
 }
-
+/**
+ * 
+ */
 function closeDetailContain() {
     document.getElementById('infoContain').style.display = 'none';
     startAnimations();
     world.run();
-    world.unmute();
+    initializeButtonState();
 }
-
+/**
+ * button to switch to full screen mode
+ */
 function fullscreenButton() {
     document.getElementById('fullscreenButton').style.display = 'none';
     document.getElementById('normalScreenButton').style.display = 'block';
     let fullscreen = document.getElementById('fullScreen');
     enterFullscreen(fullscreen);
-}
-
-function normalScreenButton() {
-    document.getElementById('fullscreenButton').style.display = 'block';
-    document.getElementById('normalScreenButton').style.display = 'none';
-    exitFullscreen();
 }
 
 function enterFullscreen(element) {
@@ -132,6 +178,14 @@ function enterFullscreen(element) {
     } else if (element.webkitRequestFullscreen) {  // iOS Safari
         element.webkitRequestFullscreen();
     }
+}
+/**
+ * button to switch back to the normal view
+ */
+function normalScreenButton() {
+    document.getElementById('fullscreenButton').style.display = 'block';
+    document.getElementById('normalScreenButton').style.display = 'none';
+    exitFullscreen();
 }
 
 function exitFullscreen() {

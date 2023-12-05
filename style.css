@@ -42,6 +42,22 @@ canvas {
     position: relative;
 }
 
+.deviceCheck {
+    display: none;
+}
+
+.deviceCheck {
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    font-size: 50px;
+    position: absolute;
+    z-index: 999;
+    background-color: rgb(191, 100, 38);
+    text-align: center;
+}
+
 .startScreen,
 .endScreen {
     display: flex;
@@ -247,7 +263,7 @@ canvas {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 999;
+    z-index: 997;
 }
 
 #loader {
@@ -322,5 +338,11 @@ canvas {
 
     .infoContain2 {
         padding-top: 10px;
+    }
+}
+
+@media (max-width: 720px) and (orientation: portrait) {
+    .deviceCheck {
+        display: flex;
     }
 }

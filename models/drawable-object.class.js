@@ -7,6 +7,25 @@ class DrawableObject {
     imageCache = {};
     currentImage = 0;
 
+    drawFrame(ctx) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof Chickensmall || this instanceof Endboss) {
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = 'red';
+            ctx.rect(this.x + this.offset.left, this.y + this.offset.top, (this.x + this.width - this.offset.right) -
+                (this.x + this.offset.left), (this.y + this.height - this.offset.bottom) - (this.y + this.offset.top));
+            ctx.stroke();
+        }
+        if (this instanceof Character || this instanceof Chicken || this instanceof Chickensmall || this instanceof Endboss) {
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = 'blue';
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }
+
+    }
+
     draw(ctx) {
         try {
             ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
@@ -33,5 +52,21 @@ class DrawableObject {
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
+    }
+
+    resolveImageIndex() {
+        if (this.percentage == 100) {
+            return 5;
+        } else if (this.percentage >= 80) {
+            return 4;
+        } else if (this.percentage >= 60) {
+            return 3;
+        } else if (this.percentage >= 40) {
+            return 2;
+        } else if (this.percentage >= 20) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

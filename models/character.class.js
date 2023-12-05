@@ -67,10 +67,10 @@ class Character extends MovableObject {
     speedY = 2;
     idleTimeout = 0;
     offset = {
-        top: 120,
-        bottom: 20,
-        left: 40,
-        right: 40
+        top: 100,
+        bottom: 10,
+        left: 10,
+        right: 25
     }
 
     jumpingOfChicken = false;
@@ -81,6 +81,7 @@ class Character extends MovableObject {
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
+        this.animationInterval = null;
         this.applyGravity();
         this.loadAllImages();
         this.animate();
@@ -109,7 +110,9 @@ class Character extends MovableObject {
             this.world.camera_x = -this.x + 100;
         }, 1000 / 25);
     }
-
+    /**
+     * Use the right arrow key to move the character to the right
+     */
     characterMoveRight() {
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
             this.moveRight();
@@ -118,6 +121,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * Use the left arrow key to move the character to the left
+     */
     characterMoveLeft() {
         if (this.world.keyboard.LEFT && this.x > 0) {
             this.moveLeft();
@@ -126,6 +132,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * in the function, the animations are played in an interval 
+     */
     characterAnimate() {
         setStoppableInterval(() => {
             this.characterSleep();
@@ -135,6 +144,15 @@ class Character extends MovableObject {
         }, 150);
     }
 
+    /**
+        * when the character jumps off the ground:
+            * the time is reset
+            * the images are played and the sound
+        * when the up arrow key is pressed: 
+            * the variable jumpOfChicken is set to true
+            * the idleTimout is set to 0
+            * the jump() function is executed
+     */
     characterJump() {
         if (this.isAboveGround()) {
             this.handleKeyPress();
@@ -148,31 +166,51 @@ class Character extends MovableObject {
         }
     }
 
+    jump() {
+        this.speedY = 30;
+    }
+
+    /**
+     * Checking how long the character stands still
+     */
     characterSleep() {
+        this.stopAnimation();
         this.playAnimation(this.IMAGES_IDLE);
         this.idleTimeout += 100;
         if (this.idleTimeout >= 5000) {
             this.snoringAnimation();
         }
     }
-
+    /**
+     * playback of the animation and a sound
+     */
     snoringAnimation() {
         this.snoring_charcter_sound.play();
         this.playAnimation(this.IMAGES_LONG_IDLE);
     }
 
+    /**
+     * Function for resetting the idle timeout
+     */
     handleKeyPress() {
         this.idleTimeout = 0;
         this.snoring_charcter_sound.pause();
     }
 
+    /**
+     * as soon as the right or left arrow keys are pressed, the animation starts to run
+     */
     walkingCharacter() {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.stopAnimation();
             this.playAnimation(this.IMAGES_WALKING);
             this.handleKeyPress();
         }
     }
 
+    /**
+     * Charcter is dead
+     */
     characterDead() {
         if (this.isDead()) {
             this.deadAnimation();
@@ -188,6 +226,9 @@ class Character extends MovableObject {
         }, 1000 / 20);
     }
 
+    /**
+     * Function to end the game and stop all intervals
+     */
     gameOver() {
         setTimeout(() => {
             stopGame();
@@ -195,13 +236,17 @@ class Character extends MovableObject {
         }, 1250);
     }
 
+    /**
+     * Character is injured
+     */
     characterHurt() {
         if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);
         }
     }
 
-    jump() {
-        this.speedY = 30;
+    stopAnimation() {
+        clearInterval(this.animationInterval);
+        this.animationInterval = null;
     }
 }

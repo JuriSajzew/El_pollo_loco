@@ -4,7 +4,12 @@ class Endboss extends MovableObject {
     width = 300;
     hadFirstContact = false;
     energy = 80;
-
+    offset = {
+        top: 120,
+        left: 120,
+        right: 120,
+        bottom: 120
+    }
 
     IMAGES_ENDBOSS_WALKING = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -55,6 +60,9 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
+    /**
+     * loading all images
+     */
     loadAllImages() {
         this.loadImages(this.IMAGES_ENDBOSS_WALKING);
         this.loadImages(this.IMAGES_ENDBOSS_DEAD);
@@ -62,11 +70,17 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_ALERT);
     }
-
+    /**
+     * start the animation
+     */
     animate() {
         this.EndbossAnimate();
     }
-
+    /**
+     * start the intervals move left
+     * start animate dead endboss
+     * start animate hurt endboss
+     */
     EndbossAnimate() {
         setStoppableInterval(() => {
             this.EndbossMoveLeft();
@@ -75,12 +89,19 @@ class Endboss extends MovableObject {
         }, 1000 / 10);
     }
 
+    /**
+     * function to move the endboss zo the left
+     */
     EndbossMoveLeft() {
         this.moveLeft();
         this.otherDirection = false;
         this.playAnimation(this.IMAGES_ENDBOSS_WALKING);
     }
 
+    /**
+     * Check whether the end boss is dead
+     * 
+     */
     EndbossDead() {
         if (this.isDead()) {
             this.deadEndbossAnimation();
@@ -88,13 +109,9 @@ class Endboss extends MovableObject {
         }
     }
 
-    deadEndbossAnimation() {
-        setStoppableInterval(() => {
-            this.playAnimation(this.IMAGES_ENDBOSS_DEAD);
-            world.win_sound.play();
-        }, 1000 / 20)
-    }
-
+    /**
+     * function to show endscreen and end the interval
+     */
     gameOver() {
         setTimeout(() => {
             stopGame();
@@ -102,6 +119,19 @@ class Endboss extends MovableObject {
         }, 1250);
     }
 
+    /**
+     * Start the animation when the end boss is dead
+     */
+    deadEndbossAnimation() {
+        setStoppableInterval(() => {
+            this.playAnimation(this.IMAGES_ENDBOSS_DEAD);
+            world.win_sound.play();
+        }, 1000 / 20)
+    }
+
+    /**
+     * check if endboss has been injured
+     */
     EndbossHurt() {
         if (this.isHurt()) {
             this.playAnimation(this.IMAGES_ENDBOSS_HURT);

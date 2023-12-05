@@ -20,17 +20,27 @@ class StatusBarHealth extends DrawableObject {
         this.setpercentTage(100);
     }
 
+    /**
+     * Calculation of the percentage of life the character has lost
+     */
     percent() {
         let percent = this.character.energy / this.percentage;
         this.setpercentTage(percent);
     }
 
+    /**
+     * Calculation for the status bar
+     * @param percentage Fixed variable of percent
+     */
     setpercentTage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES_STATUSBAR_HEALTH[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
+    /**
+     * Display status bar of the respective images 
+     */
     resolveImageIndex() {
         if (this.percentage == 100) {
             return 0;

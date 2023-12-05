@@ -18,6 +18,9 @@ class Chickensmall extends MovableObject {
         this.animate();
     }
 
+   /**
+    * start the animation to run the smallChickens
+    */
     animate() {
         setStoppableInterval(() => {
             this.moveLeft();

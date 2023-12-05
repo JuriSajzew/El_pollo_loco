@@ -21,7 +21,7 @@ class EndbossStatusBar extends DrawableObject {
     }
 
     percent() {
-        let percent = this.character.energy / this.percentage;
+        let percent = this.EndBoss.energy / this.percentage;
         this.setpercentTage(percent);
     }
 
@@ -29,21 +29,5 @@ class EndbossStatusBar extends DrawableObject {
         this.percentage = percentage;
         let path = this.IMAGES_ENDBOSSSTATUSBAR[this.resolveImageIndex()];
         this.img = this.imageCache[path];
-    }
-
-    resolveImageIndex() {
-        if (this.percentage == 100) {
-            return 5;
-        } else if (this.percentage >= 80) {
-            return 4;
-        } else if (this.percentage >= 60) {
-            return 3;
-        } else if (this.percentage >= 40) {
-            return 2;
-        } else if (this.percentage >= 20) {
-            return 1;
-        } else {
-            return 0;
-        }
     }
 }
