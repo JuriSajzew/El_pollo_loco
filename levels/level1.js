@@ -63,7 +63,12 @@ function initLevel() {
             new BottleObject(),
             new BottleObject(),
             new BottleObject(),
-            new BottleObject()
+            new BottleObject(),
+            new BottleObject(),
+            new BottleObject(),
+            new BottleObject(),
+            new BottleObject(),
+            new BottleObject(),
         ]
     );
 }

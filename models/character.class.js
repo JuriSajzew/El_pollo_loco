@@ -104,7 +104,6 @@ class Character extends MovableObject {
     characterMove() {
         setStoppableInterval(() => {
             this.walking_sound.pause();
-            this.walkingCharacter();
             this.characterMoveRight();
             this.characterMoveLeft();
             this.world.camera_x = -this.x + 100;
@@ -138,6 +137,7 @@ class Character extends MovableObject {
     characterAnimate() {
         setStoppableInterval(() => {
             this.characterSleep();
+            this.walkingCharacter();
             this.characterJump();
             this.characterDead();
             this.characterHurt();
@@ -174,7 +174,6 @@ class Character extends MovableObject {
      * Checking how long the character stands still
      */
     characterSleep() {
-        this.stopAnimation();
         this.playAnimation(this.IMAGES_IDLE);
         this.idleTimeout += 100;
         if (this.idleTimeout >= 5000) {
@@ -202,7 +201,6 @@ class Character extends MovableObject {
      */
     walkingCharacter() {
         if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-            this.stopAnimation();
             this.playAnimation(this.IMAGES_WALKING);
             this.handleKeyPress();
         }
@@ -242,11 +240,7 @@ class Character extends MovableObject {
     characterHurt() {
         if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);
+            this.handleKeyPress();
         }
-    }
-
-    stopAnimation() {
-        clearInterval(this.animationInterval);
-        this.animationInterval = null;
     }
 }

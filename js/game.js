@@ -18,10 +18,10 @@ function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
     hideLoader();
-    world.background_sound.play();
+    initializeButtonState();
     mobileTouchStart();
     mobileTouchStop();
-    window.onload = checkCanvasHeight();
+    window.addEventListener('load', checkCanvasHeight());
     window.addEventListener('resize', checkCanvasHeight());
 }
 /**
@@ -35,15 +35,11 @@ function startAnimations() {
     animateArray(world.level.bottles);
     animateItems(world.character);
 }
-/**
- * 
- */
+
 function animateItems(item) {
     item.animate();
 }
-/**
- * 
- */
+
 function animateArray(array) {
     array.forEach(item => {
         animateItems(item);
@@ -110,6 +106,8 @@ function initializeButtonState() {
     } else {
         document.getElementById('tonButton').style.display = 'none';
         document.getElementById('muteButton').style.display = 'block';
+        world.background_sound.loop = true;
+        world.background_sound.play();
         world.unmute();
     }
 }
@@ -120,8 +118,8 @@ function initializeButtonState() {
 function restartButton() {
     document.getElementById('endScreen').style.display = 'none';
     StartGame();
-    initializeButtonState();
 }
+
 /**
  * infoButton
  */
@@ -273,14 +271,26 @@ function mobileTouchStop() {
     });
 }
 
+/**
+ * check whether it is displayed on the desktop or on a cell phone
+ */
 function checkCanvasHeight() {
     const canvas = document.getElementById('canvas');
-    if (canvas) {
-        const canvasHeight = canvas.height;
-        if (canvasHeight < 490) {
-            document.querySelector('.mobileButtonContain').style.display = 'flex';
+    const mobileButtonContain = document.querySelector('.mobileButtonContain');
+
+    if (canvas && mobileButtonContain) {
+        const windowWidth = window.innerWidth;
+
+        // Hier können Sie die Breite anpassen, ab der Sie die Tasten ein- oder ausblenden möchten
+        const mobileWidthThreshold = 768; // Beispiel: Tasten werden eingeblendet, wenn die Fensterbreite kleiner als 768 Pixel ist
+
+        if (windowWidth < mobileWidthThreshold) {
+            mobileButtonContain.style.display = 'flex';
         } else {
-            document.querySelector('.mobileButtonContain').style.display = 'none';
+            mobileButtonContain.style.display = 'none';
         }
     }
 }
+
+
+

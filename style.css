@@ -187,6 +187,7 @@ canvas {
     justify-content: center;
     flex-direction: column;
     background-image: url('img/Background/horse-2255876_1920.jpg');
+    overflow: hidden;
 }
 
 .mobileButtonContain {

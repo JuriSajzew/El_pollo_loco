@@ -59,6 +59,7 @@ class World {
             let bottle = new ThrowableObject(this.character.x, this.character.y);
             this.throwableobjects.push(bottle);
             this.character.throwBottle();
+            this.character. handleKeyPress();
             this.StatusBarBottle.setpercentTage(this.character.bottle);
             if (this.character.bottle === 0) {
                 this.canThrowBottle = false;
@@ -260,7 +261,6 @@ class World {
         }
 
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

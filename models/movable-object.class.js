@@ -81,7 +81,7 @@ class MovableObject extends DrawableObject {
      * Collecting objects like bottle
      */
     collectBottle() {
-        this.bottle += 20;
+        this.bottle += 10;
     }
 
     /**
@@ -100,7 +100,7 @@ class MovableObject extends DrawableObject {
      * if the bottle hits the opponent, his life is reduced
      */
     throwBottle() {
-        this.bottle -= 20;
+        this.bottle -= 5;
         if (this.bottle < 0) {
             this.bottle = 0;
         }
