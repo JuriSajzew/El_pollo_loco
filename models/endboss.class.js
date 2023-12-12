@@ -43,11 +43,11 @@ class Endboss extends MovableObject {
     y = 50;
     height = 400;
     width = 300;
-    hadFirstContact = false;
+    throwBottleEndboss = false;
     energy = 80;
     offset = {
         top: 150,
-        bottom: 10,
+        bottom: 100,
         left: 50,
         right: 40,
 
@@ -71,12 +71,14 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_ALERT);
     }
+
     /**
      * start the animation
      */
     animate() {
         this.EndbossAnimate();
     }
+    
     /**
      * start the intervals move left
      * start animate dead endboss

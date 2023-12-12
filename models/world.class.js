@@ -19,9 +19,11 @@ class World {
     background_sound = new Audio('audio/background_sound.mp3');
     hurt_endboss_sound = new Audio('audio/endboss_sound.mp3');
     win_sound = new Audio('audio/win.mp3');
+    splash_bottle_sound = new Audio('audio/splash_bottle.mp3');
 
     throwableobjects = [];
     canThrowBottle = true;
+    bottleThrow = false;
     coinObject = [];
     deadEnemy = [];
     jumpingOfChicken = [];
@@ -38,6 +40,7 @@ class World {
     setWorld() {
         this.character.world = this;
     }
+
     /**
      * Different intervals that are called
      */
@@ -50,6 +53,7 @@ class World {
             this.checkCollisions();
         }, 200);
     }
+
     /**
      * Check whether the 'D' button has been pressed and whether the character has collected bottles
      * if Character has not collected any bottles then the 'D' button is not executed
@@ -59,13 +63,15 @@ class World {
             let bottle = new ThrowableObject(this.character.x, this.character.y);
             this.throwableobjects.push(bottle);
             this.character.throwBottle();
-            this.character. handleKeyPress();
+            this.character.handleKeyPress();
+            bottle.throw();
             this.StatusBarBottle.setpercentTage(this.character.bottle);
             if (this.character.bottle === 0) {
                 this.canThrowBottle = false;
             }
         }
     }
+
     /**
      * if jumpingOfChicken = true then the following function is executed, otherwise it is skipped
      */
@@ -74,6 +80,7 @@ class World {
             this.checkCollisionsJumpOfChicken();
         }
     }
+
     /**
      * Check whether the collision with chicken has taken place from above
      */
@@ -89,6 +96,7 @@ class World {
             }
         })
     }
+
     /**
      * 
      */
@@ -104,17 +112,19 @@ class World {
         this.deadEnemy.push(deadEnemy);
         this.level.enemies.splice(indexOfEnemies, 1);
     }
+
     /**
      * main function that executes the individual functions
      */
     checkCollisions() {
         this.checkCollisionsEndboss();
-        this.checkCollisionsBottleEndboss();
+        this.checkCollisionsThrowBottle();
         this.checkCollisionsBottleChicken();
         this.checkCollisionsCharacterBottle();
         this.checkCollisionsCharacterCoin();
         this.checkCollisionsChicken();
     }
+
     /**
      * Check whether the character has collided with Endboss
      */
@@ -129,18 +139,45 @@ class World {
             });
         }, 200);
     }
+
     /**
      * Check whether the bottle has hit the enboss
      */
-    checkCollisionsBottleEndboss() {
-        this.throwableobjects.forEach((bottle) => {
-            this.level.endboss.forEach((endboss) => {
-                if (bottle.isColliding(endboss)) {
-                    endboss.hit();
-                    this.StatusBarEndboss.setpercentTage(endboss.energy);
-                }
-            })
+    checkCollisionsThrowBottle() {
+        this.throwableobjects.forEach((bottle, indexOfbottle) => {
+            this.checkCollisionsBottleEndboss(bottle, indexOfbottle);
+            this.checkCollisionsBottleGround(bottle, indexOfbottle);
         })
+    }
+
+    /**
+     * check whether the bottle has hit the final boss
+     */
+    checkCollisionsBottleEndboss(bottle, indexOfbottle) {
+        this.level.endboss.forEach((endboss) => {
+            if (bottle.isColliding(endboss)) {
+                endboss.hitEndboss();
+                endboss.throwBottleEndboss = true;
+                this.StatusBarEndboss.setpercentTage(endboss.energy);
+                this.splash_bottle_sound.play();
+                setTimeout(() => {
+                    this.throwableobjects.splice(indexOfbottle);
+                    endboss.throwBottleEndboss = false;
+                }, 100);
+            }
+        })
+    }
+
+    /**
+     * check whether the bottle has hit the ground
+     */
+    checkCollisionsBottleGround(bottle, indexOfbottle) {
+        if (!bottle.isAboveGround()) {
+            setTimeout(() => {
+                this.throwableobjects.splice(indexOfbottle);
+                this.splash_bottle_sound.play();
+            });
+        }
     }
 
     /**
@@ -151,10 +188,12 @@ class World {
             this.level.enemies.forEach((enemy, indexOfEnemies) => {
                 if (bottle.isColliding(enemy)) {
                     this.checkJumpOfEnemy(enemy, indexOfEnemies);
+                    this.splash_bottle_sound.play();
                 }
             })
         })
     }
+
     /**
      * Check whether the character has collided with bottle
      */
@@ -168,6 +207,7 @@ class World {
             }
         });
     }
+
     /**
      * Check whether the character has collided with coins
      */
@@ -182,6 +222,7 @@ class World {
             }
         })
     }
+
     /**
      * Check whether the character has collided with chicken
      */
@@ -194,6 +235,7 @@ class World {
             };
         });
     }
+
     /**
      * function to display all objects in the game
      */
@@ -209,6 +251,7 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
         this.selfFunction();
     }
+
     /**
      * loading the moving objects
      */
@@ -218,6 +261,7 @@ class World {
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.clouds);
     }
+
     /**
      * load fixed objects
      */
@@ -227,6 +271,7 @@ class World {
         this.addToMap(this.StatusBarCoin);
         this.addToMap(this.StatusBarEndboss);
     }
+
     /**
      * Display of moving objects 
      */
@@ -235,15 +280,14 @@ class World {
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableobjects);
     }
-    /**
-     * 
-     */
+
     selfFunction() {
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
         });
     }
+
     /**
      * Display objects on the map
      */
@@ -252,6 +296,7 @@ class World {
             this.addToMap(o);
         });
     }
+
     /**
      * Display objects on the map
      */
@@ -267,6 +312,7 @@ class World {
         }
 
     }
+
     /**
      * function when the object moves to the left
      */
@@ -276,6 +322,7 @@ class World {
         this.ctx.scale(-1, 1);
         mo.x = mo.x * -1;
     }
+
     /**
      * function when the object moves to the left
      * @param {*} mo The value of the character is transferred here  
@@ -284,6 +331,7 @@ class World {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
+
     /**
      * Mute the sound
      */
@@ -294,8 +342,10 @@ class World {
         this.hurt_endboss_sound.muted = true;
         this.background_sound.muted = true;
         this.win_sound.muted = true;
+        this.splash_bottle_sound.muted = true;
         this.muteCharacterSound();
     }
+
     /**
      * Mute the sound from the character
      */
@@ -307,6 +357,7 @@ class World {
         this.character.walking_sound.muted = true;
         this.character.walking_sound.muted = true;
     }
+
     /**
      * Activating the sound
      */
@@ -317,8 +368,10 @@ class World {
         this.hurt_endboss_sound.muted = false;
         this.background_sound.muted = false;
         this.win_sound.muted = false;
+        this.splash_bottle_sound.muted = false;
         this.unmuteCharacterSound();
     }
+
     /**
      * Activating the sound the character
      */

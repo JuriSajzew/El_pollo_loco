@@ -31,7 +31,7 @@ class MovableObject extends DrawableObject {
      */
     isAboveGround() {
         if (this instanceof ThrowableObject) {
-            return true;
+            return this.y < 365;
         } else {
             return this.y < 180;
         }
@@ -55,8 +55,6 @@ class MovableObject extends DrawableObject {
 
     /**
      * Check whether objects have collided with each other
-     * @param {*} mo 
-     * @returns 
      */
     isColliding(mo) {
         return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
@@ -114,18 +112,18 @@ class MovableObject extends DrawableObject {
         timepassed = timepassed / 1000;
         return timepassed < 1;
     }
+
     /**
      * Collecting objects like coins
      */
     collectCoin() {
         this.coin += 20;
     }
+    
     /**
      * Checking whether the objects are dead
      */
     isDead() {
         return this.energy === 0;
     }
-
-
 }

@@ -63,7 +63,7 @@ class Character extends MovableObject {
     ];
     y = 160;
     world;
-    speed = 8;
+    speed = 10;
     speedY = 2;
     idleTimeout = 0;
     offset = {
@@ -109,6 +109,7 @@ class Character extends MovableObject {
             this.world.camera_x = -this.x + 100;
         }, 1000 / 25);
     }
+    
     /**
      * Use the right arrow key to move the character to the right
      */
@@ -180,6 +181,7 @@ class Character extends MovableObject {
             this.snoringAnimation();
         }
     }
+    
     /**
      * playback of the animation and a sound
      */

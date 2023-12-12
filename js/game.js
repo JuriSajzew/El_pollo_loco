@@ -3,13 +3,12 @@ let world;
 let keyboard = new Keyboard();
 let intervalIds = [];
 let i = 1;
-/**
- * 
- */
+
 function setStoppableInterval(fn, time) {
     let id = setInterval(fn, time);
     intervalIds.push(id);
 }
+
 /**
  * Function for loading the entire map
  */
@@ -24,6 +23,7 @@ function init() {
     window.addEventListener('load', checkCanvasHeight());
     window.addEventListener('resize', checkCanvasHeight());
 }
+
 /**
  * Function for starting all animations
  */
@@ -45,6 +45,7 @@ function animateArray(array) {
         animateItems(item);
     });
 }
+
 /**
  * the loading progress is displayed here 
  */
@@ -64,6 +65,7 @@ function showLoader() {
 function hideLoader() {
     document.getElementById("loader-wrapper").style.display = "none";
 }
+
 /**
  * 
  */
@@ -71,6 +73,7 @@ function stopGame() {
     intervalIds.forEach(clearInterval);
     world.mute();
 }
+
 /**
  * button to mute the sound
  */
@@ -80,6 +83,7 @@ function mutteButton() {
     world.mute();
     saveLastClickedButton('muteButton');
 }
+
 /**
  * button to switch the sound on
  */
@@ -108,6 +112,7 @@ function initializeButtonState() {
         document.getElementById('muteButton').style.display = 'block';
         world.background_sound.loop = true;
         world.background_sound.play();
+        world.background_sound.volume = 0.5;
         world.unmute();
     }
 }
@@ -128,6 +133,7 @@ function settingsButton() {
     document.getElementById('infoContain').style.display = 'block';
     textInfoContain();
 }
+
 /**
  * text description of the game
  */
@@ -149,8 +155,9 @@ function textInfoContain() {
         </div>
 `;
 }
+
 /**
- * 
+ * closes the game description container 
  */
 function closeDetailContain() {
     document.getElementById('infoContain').style.display = 'none';
@@ -158,6 +165,7 @@ function closeDetailContain() {
     world.run();
     initializeButtonState();
 }
+
 /**
  * button to switch to full screen mode
  */
@@ -177,6 +185,7 @@ function enterFullscreen(element) {
         element.webkitRequestFullscreen();
     }
 }
+
 /**
  * button to switch back to the normal view
  */
